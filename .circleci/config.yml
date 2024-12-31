@@ -29,12 +29,10 @@ jobs:
           command: apk add --no-cache jq
       - run:
           name: Initialize Terraform
-          command: |  
-            terraform init \  
-                -input=false  
-            displayName: Terraform Init  
-            env:  
-              TF_TOKEN_app_terraform_io: $TFE_TOKEN
+          command: |
+            terraform init -input=false
+          environment:
+            TF_TOKEN_app_terraform_io: $TFE_TOKEN
       - run:
           name: Terraform Plan
           command: terraform plan -out=tfplan
@@ -50,12 +48,10 @@ jobs:
       - checkout
       - run:
           name: Initialize Terraform
-          command: |  
-            terraform init \  
-                -input=false  
-            displayName: Terraform Init  
-            env:  
-              TF_TOKEN_app_terraform_io: $TFE_TOKEN
+          command: |
+            terraform init -input=false
+          environment:
+            TF_TOKEN_app_terraform_io: $TFE_TOKEN
       - run:
           name: Terraform Apply
           command: terraform apply -auto-approve
@@ -66,12 +62,10 @@ jobs:
       - checkout
       - run:
           name: Initialize Terraform
-          command: |  
-            terraform init \  
-                -input=false  
-            displayName: Terraform Init  
-            env:  
-              TF_TOKEN_app_terraform_io: $TFE_TOKEN
+          command: |
+            terraform init -input=false
+          environment:
+            TF_TOKEN_app_terraform_io: $TFE_TOKEN
       - run:
           name: Terraform Destroy
           command: terraform destroy -auto-approve
