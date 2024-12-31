@@ -8,6 +8,8 @@ executors:
 jobs:
   terraform-plan:
     executor: terraform
+    environment:
+      AWS_DEFAULT_REGION: "us-east-1" # Optional default region
     steps:
       - checkout
       - run:
@@ -60,7 +62,8 @@ jobs:
 workflows:
   terraform-workflow:
     jobs:
-      - terraform-plan
+      - terraform-plan:
+          context: AWS_Credentials
       - hold-apply:
           type: approval
           requires:
@@ -69,6 +72,8 @@ workflows:
           requires:
             - terraform-plan
             - hold-apply
+          context: AWS_Credentials
+
       - hold-destroy:
           type: approval
           requires:
@@ -77,3 +82,4 @@ workflows:
           requires:
             - terraform-apply
             - hold-destroy
+          context: AWS_Credentials
