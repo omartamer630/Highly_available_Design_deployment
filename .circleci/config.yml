@@ -10,7 +10,8 @@ jobs:
     executor: terraform
     environment:
       AWS_DEFAULT_REGION: "us-east-1" # Optional default region
-      HCP_API_TOKEN: $HCP_API_TOKEN 
+      HCP_API_TOKEN: $HCP_API_TOKEN
+      TFE_TOKEN: $TFE_TOKEN
     steps:
       - checkout
       - run:
