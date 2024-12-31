@@ -27,6 +27,9 @@ jobs:
           name: Install jq
           command: apk add --no-cache jq
       - run:
+          name: Terraform Login
+          command: terraform login
+      - run:
           name: Initialize Terraform
           command: terraform init
       - run:
