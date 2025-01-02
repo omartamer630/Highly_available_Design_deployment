@@ -5,17 +5,16 @@ resource "aws_launch_template" "ec2s_app" {
   instance_type = "t2.micro"
   key_name      = aws_key_pair.private_key_ec2s_pair.key_name
   network_interfaces {
-    security_groups = [aws_security_group.forgtech_ec2_sg_vpc_2.id]
+    security_groups = [aws_security_group.forgtech_ec2_sg_vpc_1.id]
   }
 
   user_data = base64encode(<<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y python3
-              echo "Hello, World from ASG" > /home/ec2-user/index.html
-              cd /home/ec2-user
-              python3 -m http.server 80 &
-              EOF
+        yum install git -y
+        git clone https://github.com/omartamer630/Highly_available_Design_deployment.git
+        cd Highly_available_Design_deployment/app/
+        sudo ./prerequisites.sh
+        sudo python3 app.py
+      EOF
   )
 }
 
@@ -27,7 +26,7 @@ resource "aws_autoscaling_group" "asg_private_subnets" {
   max_size            = 3
   min_size            = 2
   desired_capacity    = 2
-  vpc_zone_identifier = [aws_subnet.vpc_1_private_subnet.id, aws_subnet.vpc_2_private_subnet.id]
+  vpc_zone_identifier = [aws_subnet.vpc_1_private_subnet.id]
   tag {
     key                 = "Name"
     value               = "ASG_instance"

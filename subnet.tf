@@ -34,6 +34,14 @@ resource "aws_subnet" "vpc_2_private_subnet" {
   }
 }
 
+resource "aws_subnet" "vpc_2_private_subnet_2" {
+  vpc_id            = aws_vpc.vpc_2.id
+  cidr_block        = var.cidr[6].cidr
+  availability_zone = var.AZs[2]
+  tags = {
+    Name = "${var.environment}-vpc-2-priv-subnet"
+  }
+}
 resource "aws_route_table" "vpc_2_route_table" {
   vpc_id = aws_vpc.vpc_2.id
 

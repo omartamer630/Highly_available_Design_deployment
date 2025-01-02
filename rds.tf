@@ -11,7 +11,7 @@ resource "aws_db_instance" "forgtech-rds-postgresql" {
   skip_final_snapshot         = true  # after deleting RDS aws will not create snapshot 
   copy_tags_to_snapshot       = true  # default = false
   db_subnet_group_name        = aws_db_subnet_group.db-attached-subnet.id
-  vpc_security_group_ids      = [aws_security_group.forgtech_ec2_sg_vpc_3.id, aws_security_group.forgtech_ec2_sg_vpc_2.id]
+  vpc_security_group_ids      = [aws_security_group.forgtech_ec2_sg_vpc_2.id]
   username                    = "omartamer"
   manage_master_user_password = true  # manage password using secret manager service
   auto_minor_version_upgrade  = false # default = false
@@ -29,8 +29,8 @@ resource "aws_db_instance" "forgtech-rds-postgresql" {
 resource "aws_db_subnet_group" "db-attached-subnet" {
   name = "forgtech-db-subnet-group"
   subnet_ids = [
-    "${aws_subnet.vpc_1_private_subnet.id}",
-    "${aws_subnet.vpc_2_private_subnet.id}"
+    "${aws_subnet.vpc_2_private_subnet.id}",
+    "${aws_subnet.vpc_2_private_subnet_2.id}"
   ]
   tags = {
     Name = "${var.environment}-db-subnets"

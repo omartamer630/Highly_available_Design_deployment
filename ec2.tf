@@ -13,7 +13,6 @@ resource "aws_instance" "bastion_host" {
   ami                         = "ami-0182f373e66f89c85"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.vpc_3_public_subnet.id
-  availability_zone           = "${var.AWS_DEFAULT_REGION}a"
   vpc_security_group_ids      = [aws_security_group.forgtech_ec2_sg_vpc_3.id]
   associate_public_ip_address = true
   key_name                    = "forgtech-keypair"

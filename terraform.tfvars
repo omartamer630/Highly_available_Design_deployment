@@ -17,7 +17,11 @@ cidr = [
     }, {
     cidr = "13.0.1.0/24"
     name = "VPC3-public-subnet"
-  }
+  },
+  {
+      cidr = "12.0.2.0/24"
+    name = "VPC2-private-subnet_2"
+    }
 ]
 
 AZs = ["us-east-1a", "us-east-1b", "us-east-1c"]
