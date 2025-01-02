@@ -9,7 +9,7 @@ def connect_db():
             host="forgtech-postgres-db.c9w8688c6c79.us-east-1.rds.amazonaws.com",
             database="postgres",  
             user="omartamer",      
-            password="L1mX<UiZVdWwN57qL:O~p1..~Kf2" 
+            password="8Xah[oqKrk)1.*!jOYGaWvnVKFao" 
         )
         return "Connected to the database!"
     except Exception as e:

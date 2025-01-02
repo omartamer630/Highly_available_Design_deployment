@@ -1,90 +1,117 @@
-resource "aws_security_group" "forgtech_ec2_sg_vpc_1" {
-  name        = "ec2-sg-vpc-1"
-  description = "Security group for EC2 in VPC_1"
-  vpc_id      = aws_vpc.vpc_1.id
+# VPC 1 Security group
+resource "aws_security_group" "vpc_1_security_group" {
+  vpc_id = aws_vpc.vpc_1.id
+
+  # add HTTP ingress rule 
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Add SSH ingress rule
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace with a more restrictive CIDR if needed
+  }
+
+  # Add SSH ingress rule
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace with a more restrictive CIDR if needed
+  }
+  # Add RDS Postgres ingress rule
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace with a more restrictive CIDR if needed
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   tags = {
-    Name = "${var.environment}-EC2-SG-VPC1"
+    Name = "VPC_1_SG"
   }
-}
 
-# Ingress Rule for EC2 -> RDS
-resource "aws_security_group_rule" "forgtech-rds-access-from-vpc1" {
-  type                     = "ingress"
-  from_port                = 5432
-  to_port                  = 5432
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.forgtech_ec2_sg_vpc_1.id
-  cidr_blocks       = [aws_vpc.vpc_1.cidr_block]           # Allow traffic from VPC_1 CIDR block
 }
+# VPC 2 Security group
+resource "aws_security_group" "vpc_2_security_group" {
+  vpc_id = aws_vpc.vpc_2.id
 
-# Egress Rule for EC2 (allow outgoing traffic)
-resource "aws_vpc_security_group_egress_rule" "forgtech-ec2-egress-vpc1" {
-  security_group_id = aws_security_group.forgtech_ec2_sg_vpc_1.id
-  ip_protocol       = "-1"
-  cidr_ipv4         = "0.0.0.0/0"
-}
-resource "aws_security_group" "forgtech_ec2_sg_vpc_2" {
-  name        = "ec2-sg-vpc-2"
-  description = "Security group for EC2 in VPC_2"
-  vpc_id      = aws_vpc.vpc_2.id
+  # Add SSH ingress rule
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace with a more restrictive CIDR if needed
+  }
+
+  # Add SSH ingress rule
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace with a more restrictive CIDR if needed
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   tags = {
-    Name = "${var.environment}-EC2-SG-VPC2"
+    Name = "VPC_2_SG"
   }
+
 }
 
-resource "aws_vpc_security_group_ingress_rule" "forgtech-ec2-ingress_vpc_2" {
-  security_group_id = aws_security_group.forgtech_ec2_sg_vpc_2.id
-  ip_protocol       = "tcp"
-  from_port         = 22
-  to_port           = 22
-  cidr_ipv4         = "0.0.0.0/0"
-}
+# VPC 3 Security group
+resource "aws_security_group" "vpc_3_security_group" {
+  vpc_id = aws_vpc.vpc_3.id
 
-resource "aws_vpc_security_group_ingress_rule" "forgtech_ec2s_ingress_2" {
-  security_group_id = aws_security_group.forgtech_ec2_sg_vpc_2.id
-  ip_protocol       = "icmp"
-  from_port         = -1
-  to_port           = -1
-  cidr_ipv4         = "0.0.0.0/0"
-}
+  # add HTTP ingress rule 
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-resource "aws_security_group_rule" "forgtech-rds-private-ingress" {
-  type                     = "ingress"
-  from_port                = 5432
-  to_port                  = 5432
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.forgtech_ec2_sg_vpc_2.id
-  cidr_blocks       = [aws_vpc.vpc_2.cidr_block]           # Allow traffic from VPC_2 CIDR block
-}
+  # Add SSH ingress rule
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace with a more restrictive CIDR if needed
+  }
 
-resource "aws_vpc_security_group_egress_rule" "forgtech-ec2-egress_vpc_2" {
-  security_group_id = aws_security_group.forgtech_ec2_sg_vpc_2.id
-  ip_protocol       = "-1"
-  cidr_ipv4         = "0.0.0.0/0"
-}
+  # Add SSH ingress rule
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"] # Replace with a more restrictive CIDR if needed
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-
-resource "aws_security_group" "forgtech_ec2_sg_vpc_3" {
-  name        = "ec2-sg"
-  description = "ec2 rules"
-  vpc_id      = aws_vpc.vpc_3.id
   tags = {
-    Name = "${var.environment}-EC2-SG-2"
+    Name = "VPC_3_SG"
   }
-}
 
-resource "aws_vpc_security_group_ingress_rule" "forgtech-ec2-ingress_vpc_3" {
-  security_group_id = aws_security_group.forgtech_ec2_sg_vpc_3.id
-  ip_protocol       = "tcp"
-  from_port         = 22
-  to_port           = 22
-  cidr_ipv4         = "0.0.0.0/0"
-}
-
-resource "aws_vpc_security_group_egress_rule" "forgtech-ec2-egress_vpc_3" {
-  security_group_id = aws_security_group.forgtech_ec2_sg_vpc_3.id
-  ip_protocol       = "-1"
-  cidr_ipv4         = "0.0.0.0/0"
 }

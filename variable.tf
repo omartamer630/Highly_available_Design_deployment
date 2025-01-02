@@ -16,8 +16,3 @@ variable "cidr" {
     name = string
   }))
 }
-
-variable "AZs" {
-  description = "Subnets AZs"
-  type        = list(string)
-}

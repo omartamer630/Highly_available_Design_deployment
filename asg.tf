@@ -5,11 +5,11 @@ resource "aws_launch_template" "ec2s_app" {
   instance_type = "t2.micro"
   key_name      = aws_key_pair.private_key_ec2s_pair.key_name
   network_interfaces {
-    security_groups = [aws_security_group.forgtech_ec2_sg_vpc_1.id]
+    security_groups = [aws_security_group.vpc_1_security_group.id]
   }
 
   user_data = base64encode(<<-EOF
-        yum install git -y
+        sudo yum install git -y
         git clone https://github.com/omartamer630/Highly_available_Design_deployment.git
         cd Highly_available_Design_deployment/app/
         sudo ./prerequisites.sh
@@ -26,7 +26,9 @@ resource "aws_autoscaling_group" "asg_private_subnets" {
   max_size            = 3
   min_size            = 2
   desired_capacity    = 2
-  vpc_zone_identifier = [aws_subnet.vpc_1_private_subnet.id]
+  vpc_zone_identifier = [aws_subnet.vpc_1_private_subnet_asg_a.id, aws_subnet.vpc_1_private_subnet_asg_b.id]
+  target_group_arns   = [aws_lb_target_group.alb_groups.arn]
+
   tag {
     key                 = "Name"
     value               = "ASG_instance"
