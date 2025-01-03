@@ -9,7 +9,6 @@ resource "aws_vpc" "vpc_1" {
 }
 
 # VPC_2 Creation
-
 resource "aws_vpc" "vpc_2" {
   cidr_block           = var.cidr[1].cidr
   enable_dns_hostnames = true
@@ -20,7 +19,6 @@ resource "aws_vpc" "vpc_2" {
 }
 
 # VPC_3 Creation
-
 resource "aws_vpc" "vpc_3" {
   cidr_block           = var.cidr[2].cidr
   enable_dns_hostnames = true

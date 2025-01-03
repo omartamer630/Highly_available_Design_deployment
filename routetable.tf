@@ -118,11 +118,6 @@ resource "aws_ec2_transit_gateway_route_table" "forgtech_tgw_rt" {
 }
 
 # Transit GW VPC_1 Route
-resource "aws_ec2_transit_gateway_route_table_association" "assoc_vpc_1" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.attach_rtb_1_to_tgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.forgtech_tgw_rt.id
-}
-
 resource "aws_ec2_transit_gateway_route" "route_to_vpc_1" {
   destination_cidr_block         = aws_vpc.vpc_1.cidr_block
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.forgtech_tgw_rt.id
@@ -131,11 +126,6 @@ resource "aws_ec2_transit_gateway_route" "route_to_vpc_1" {
 
 # Transit GW VPC_2 Route
 
-resource "aws_ec2_transit_gateway_route_table_association" "assoc_vpc_2" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.attach_rtb_2_to_tgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.forgtech_tgw_rt.id
-}
-
 resource "aws_ec2_transit_gateway_route" "route_to_vpc_2" {
   destination_cidr_block         = aws_vpc.vpc_2.cidr_block
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.forgtech_tgw_rt.id
@@ -143,11 +133,6 @@ resource "aws_ec2_transit_gateway_route" "route_to_vpc_2" {
 }
 
 # Transit GW VPC_3 Route
-
-resource "aws_ec2_transit_gateway_route_table_association" "assoc_vpc_3" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.attach_rtb_3_to_tgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.forgtech_tgw_rt.id
-}
 
 resource "aws_ec2_transit_gateway_route" "route_to_vpc_3_priv_sub" {
   destination_cidr_block         = aws_subnet.vpc_3_private_subnet.cidr_block

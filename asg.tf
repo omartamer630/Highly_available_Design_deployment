@@ -9,11 +9,12 @@ resource "aws_launch_template" "ec2s_app" {
   }
 
   user_data = base64encode(<<-EOF
-        sudo yum install git -y
-        git clone https://github.com/omartamer630/Highly_available_Design_deployment.git
-        cd Highly_available_Design_deployment/app/
-        sudo bash prerequisites.sh
-        sudo python3 app.py
+      sudo yum install git -y
+      git clone https://github.com/omartamer630/Highly_available_Design_deployment.git
+      cd Highly_available_Design_deployment/app/
+      sudo bash prerequisites.sh
+      nohup sudo python3 app.py > app.log 2>&1 &
+
       EOF
   )
 }

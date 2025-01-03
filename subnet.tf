@@ -7,7 +7,6 @@ resource "aws_subnet" "vpc_1_private_subnet_asg_a" {
     Name = "${var.environment}-vpc-1-priv-subnet-asg-a"
   }
 }
-
 resource "aws_subnet" "vpc_1_private_subnet_asg_b" {
   vpc_id            = aws_vpc.vpc_1.id
   cidr_block        = cidrsubnet(aws_vpc.vpc_1.cidr_block, 8, 1)
@@ -36,7 +35,6 @@ resource "aws_subnet" "vpc_1_private_subnet_rds_b" {
 }
 
 # VPC_2 Subnets
-
 resource "aws_subnet" "vpc_2_private_subnet" {
   vpc_id            = aws_vpc.vpc_2.id
   cidr_block        = cidrsubnet(aws_vpc.vpc_2.cidr_block, 8, 0)
@@ -47,7 +45,6 @@ resource "aws_subnet" "vpc_2_private_subnet" {
 }
 
 # VPC_3 Subnets
-
 resource "aws_subnet" "vpc_3_public_subnet" {
   vpc_id            = aws_vpc.vpc_3.id
   cidr_block        = cidrsubnet(aws_vpc.vpc_3.cidr_block, 8, 0)
@@ -60,7 +57,7 @@ resource "aws_subnet" "vpc_3_public_subnet" {
 resource "aws_subnet" "vpc_3_private_subnet" {
   vpc_id            = aws_vpc.vpc_3.id
   cidr_block        = cidrsubnet(aws_vpc.vpc_3.cidr_block, 8, 1)
-  availability_zone = "${var.AWS_DEFAULT_REGION}b"
+  availability_zone = "${var.AWS_DEFAULT_REGION}b" # Should be same as other Subnet that have NAT GW
   tags = {
     Name = "${var.environment}-vpc-3-private-subnet"
   }
