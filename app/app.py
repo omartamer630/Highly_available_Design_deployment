@@ -6,10 +6,10 @@ app = Flask(__name__)
 def connect_db():
     try:
         conn = psycopg2.connect(
-            host="",
+            host="forgtech-postgres-db.c9w8688c6c79.us-east-1.rds.amazonaws.com",
             database="postgres",  
-            user="",      
-            password="" 
+            user="omartamer",      
+            password="2<W)ecak_fK$zROMteq2uxRR6j09" 
         )
         return "Connected to the database!"
     except Exception as e:
