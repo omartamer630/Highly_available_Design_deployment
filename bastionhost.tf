@@ -36,7 +36,7 @@ resource "aws_instance" "ec2_vpc_2" {
   subnet_id                   = aws_subnet.vpc_2_private_subnet.id
   vpc_security_group_ids      = [aws_security_group.vpc_2_security_group.id]
   associate_public_ip_address = true
-  key_name                    = "forgtech-keypair"
+  key_name      = aws_key_pair.private_key_ec2s_pair.key_name
 
   user_data = <<-EOF
               #!/bin/bash

@@ -68,7 +68,15 @@ resource "aws_route_table" "vpc_3_public_route_table" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.vpc_3_internet_gateway.id
   }
+  route {
+    cidr_block         = aws_vpc.vpc_1.cidr_block
+    transit_gateway_id = aws_ec2_transit_gateway.forgtech_transit_gw.id
+  }
+  route {
+    cidr_block         = aws_vpc.vpc_2.cidr_block
+    transit_gateway_id = aws_ec2_transit_gateway.forgtech_transit_gw.id
 
+  }
   tags = {
     Name = "${var.environment}-vpc-rtb-3"
   }
@@ -83,16 +91,6 @@ resource "aws_route_table_association" "associate_route_table_3_to_subnet" {
 # VPC_3 private RTB and routes
 resource "aws_route_table" "vpc_3_private_route_table" {
   vpc_id = aws_vpc.vpc_3.id
-
-  route {
-    cidr_block         = aws_vpc.vpc_1.cidr_block
-    transit_gateway_id = aws_ec2_transit_gateway.forgtech_transit_gw.id
-  }
-  route {
-    cidr_block         = aws_vpc.vpc_2.cidr_block
-    transit_gateway_id = aws_ec2_transit_gateway.forgtech_transit_gw.id
-
-  }
 
   route {
     cidr_block     = "0.0.0.0/0"
@@ -151,8 +149,14 @@ resource "aws_ec2_transit_gateway_route_table_association" "assoc_vpc_3" {
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.forgtech_tgw_rt.id
 }
 
-resource "aws_ec2_transit_gateway_route" "route_to_vpc_3" {
-  destination_cidr_block         = aws_vpc.vpc_2.cidr_block
+resource "aws_ec2_transit_gateway_route" "route_to_vpc_3_priv_sub" {
+  destination_cidr_block         = aws_subnet.vpc_3_private_subnet.cidr_block
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.forgtech_tgw_rt.id
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.attach_rtb_3_to_tgw.id
+}
+
+resource "aws_ec2_transit_gateway_route" "route_to_vpc_3_pub_sub" {
+  destination_cidr_block         = "0.0.0.0/0"
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.forgtech_tgw_rt.id
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.attach_rtb_3_to_tgw.id
 }

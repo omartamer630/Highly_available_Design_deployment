@@ -12,7 +12,7 @@ resource "aws_launch_template" "ec2s_app" {
         sudo yum install git -y
         git clone https://github.com/omartamer630/Highly_available_Design_deployment.git
         cd Highly_available_Design_deployment/app/
-        sudo ./prerequisites.sh
+        sudo bash prerequisites.sh
         sudo python3 app.py
       EOF
   )
@@ -27,8 +27,6 @@ resource "aws_autoscaling_group" "asg_private_subnets" {
   min_size            = 2
   desired_capacity    = 2
   vpc_zone_identifier = [aws_subnet.vpc_1_private_subnet_asg_a.id, aws_subnet.vpc_1_private_subnet_asg_b.id]
-  target_group_arns   = [aws_lb_target_group.alb_groups.arn]
-
   tag {
     key                 = "Name"
     value               = "ASG_instance"

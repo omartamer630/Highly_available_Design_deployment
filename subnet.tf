@@ -60,7 +60,7 @@ resource "aws_subnet" "vpc_3_public_subnet" {
 resource "aws_subnet" "vpc_3_private_subnet" {
   vpc_id            = aws_vpc.vpc_3.id
   cidr_block        = cidrsubnet(aws_vpc.vpc_3.cidr_block, 8, 1)
-  availability_zone = "${var.AWS_DEFAULT_REGION}a"
+  availability_zone = "${var.AWS_DEFAULT_REGION}b"
   tags = {
     Name = "${var.environment}-vpc-3-private-subnet"
   }
