@@ -88,6 +88,11 @@ resource "aws_route_table_association" "associate_route_table_3_to_subnet" {
   route_table_id = aws_route_table.vpc_3_public_route_table.id
 }
 
+resource "aws_route_table_association" "associate_route_table_3_to_subnet_a" {
+  subnet_id      = aws_subnet.vpc_3_public_subnet_a.id
+  route_table_id = aws_route_table.vpc_3_public_route_table.id
+}
+
 # VPC_3 private RTB and routes
 resource "aws_route_table" "vpc_3_private_route_table" {
   vpc_id = aws_vpc.vpc_3.id
@@ -105,6 +110,11 @@ resource "aws_route_table" "vpc_3_private_route_table" {
 # Associate Private RTB to vpc 3 private subnet 
 resource "aws_route_table_association" "associate_vpc_3_private_subnet" {
   subnet_id      = aws_subnet.vpc_3_private_subnet.id
+  route_table_id = aws_route_table.vpc_3_private_route_table.id
+}
+
+resource "aws_route_table_association" "associate_vpc_3_private_subnet_a" {
+  subnet_id      = aws_subnet.vpc_3_private_subnet_a.id
   route_table_id = aws_route_table.vpc_3_private_route_table.id
 }
 

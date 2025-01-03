@@ -26,7 +26,7 @@ In this project well deploy High available application and databse, the main aim
 └── vpc.tf
 ```
 # Architecture Diagram
-![IAM Role Attached](images/Highly_available_Design_deployment.gif)
+![IAM Role Attached](images/image.png)
 
 # Check Blog for more Details
 

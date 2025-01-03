@@ -53,12 +53,28 @@ resource "aws_subnet" "vpc_3_public_subnet" {
     Name = "${var.environment}-vpc-3-pub-subnet"
   }
 }
-
+resource "aws_subnet" "vpc_3_public_subnet_a" {
+  vpc_id            = aws_vpc.vpc_3.id
+  cidr_block        = cidrsubnet(aws_vpc.vpc_3.cidr_block, 8, 2)
+  availability_zone = "${var.AWS_DEFAULT_REGION}a"
+  tags = {
+    Name = "${var.environment}-vpc-3-pub-subnet-a"
+  }
+}
 resource "aws_subnet" "vpc_3_private_subnet" {
   vpc_id            = aws_vpc.vpc_3.id
   cidr_block        = cidrsubnet(aws_vpc.vpc_3.cidr_block, 8, 1)
   availability_zone = "${var.AWS_DEFAULT_REGION}b" # Should be same as other Subnet that have NAT GW
   tags = {
     Name = "${var.environment}-vpc-3-private-subnet"
+  }
+}
+
+resource "aws_subnet" "vpc_3_private_subnet_a" {
+  vpc_id            = aws_vpc.vpc_3.id
+  cidr_block        = cidrsubnet(aws_vpc.vpc_3.cidr_block, 8, 3)
+  availability_zone = "${var.AWS_DEFAULT_REGION}a" # Should be same as other Subnet that have NAT GW
+  tags = {
+    Name = "${var.environment}-vpc-3-private-subnet_a"
   }
 }
